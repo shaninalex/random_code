@@ -30,6 +30,7 @@ func ExampleScrape() {
 	doc.Find("figure.profil-bild").Each(func(i int, s *goquery.Selection) {
 
 		src, ok := s.Find("img").Attr("src")
+		// find ? position ( if it exist ) and slice all string before ? position
         if ok {
             images = append(images, src)
             fmt.Println(src)
