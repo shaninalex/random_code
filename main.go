@@ -37,40 +37,35 @@ func ExampleScrape() {
 			i := strings.Index(src, "?")
 			if i > -1 {
 				image_url := src[:i]
-				// fmt.Printf("url: %v\n", image_url)
 				a := strings.Split(image_url, "/")
 				filename := a[len(a)-1]
 
-
-				response, e := http.Get(image_url)
-			    if e != nil {
-			        log.Fatal(e)
-			    }
-			    defer response.Body.Close()
-
-			    //open a file for writing
-			    file, err := os.Create(filename)
-			    if err != nil {
-			        log.Fatal(err)
-			    }
-			    // Use io.Copy to just dump the response body to the file. This supports huge files
-			    _, err = io.Copy(file, response.Body)
-			    if err != nil {
-			        log.Fatal(err)
-			    }
-			    file.Close()
-			    fmt.Println("Success!")
-
+				downloadImage(image_url, filename)
 
 			} else {
 				fmt.Println("some thing get wrong today...")
 			}
         }
-
 	})
-
 }
 
+
+func downloadImage( u string, n string ) {
+	response, e := http.Get(u)
+	if e != nil {
+		log.Fatal(e)
+	}
+	defer response.Body.Close()
+	file, err := os.Create(n)
+	if err != nil {
+		log.Fatal(err)
+	}
+	_, err = io.Copy(file, response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	file.Close()
+}
 
 
 func main() {
