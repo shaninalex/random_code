@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"log"
+	"strings"
 	"net/http"
 )
 
 func ExampleScrape() {
 	// Request the HTML page.
 	res, err := http.Get("https://world-of-contract.com/team/franz-josef-bartsch")
-    var images []string
 
 	if err != nil {
 		log.Fatal(err)
@@ -30,15 +30,22 @@ func ExampleScrape() {
 	doc.Find("figure.profil-bild").Each(func(i int, s *goquery.Selection) {
 
 		src, ok := s.Find("img").Attr("src")
-		// find ? position ( if it exist ) and slice all string before ? position
+
         if ok {
-            images = append(images, src)
-            fmt.Println(src)
+			i := strings.Index(src, "?")
+			if i > -1 {
+				image_url := src[:i]
+				fmt.Printf("url: %v\n", image_url)
+			} else {
+				fmt.Println("some thing get wrong today...")
+			}
         }
 
 	})
 
 }
+
+
 
 func main() {
 	ExampleScrape()
