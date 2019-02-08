@@ -1,6 +1,6 @@
-# golang_parser
+# parsers
 
-### Install
+### GoLang HTML parser
 
 go get github.com/PuerkitoBio/goquery
 
