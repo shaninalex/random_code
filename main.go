@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-const rootPath = "https://world-of-contract.com"
+const rootPath = "--example--json--url--"
 const imageFolder = "./persons/"
 
 func ExampleScrape() {
