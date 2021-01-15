@@ -6,7 +6,7 @@ APP_NAME=$1
 
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx curl
+sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx curl git
 
 
 # check if folder git-hooks exists if not 
