@@ -22,7 +22,7 @@
     ("37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" default)))
  '(package-selected-packages
    (quote
-    (typescript-mode nord-theme zenburn-theme use-package))))
+    (typescript-mode nord-theme use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
