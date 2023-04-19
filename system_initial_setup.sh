@@ -3,10 +3,11 @@ if [!-d ~/.fonts]; then
     mkdir -p ~/.fonts;
 fi;
 
-mkdir -p ~/utils
+mkdir ~/utils
+mkdir ~/projects
 
 # donwload font and install
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hack.zip -o ~/.fonts/Hack.zip
+curl https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hack.zip -o ~/.fonts/Hack.zip
 fc-cache -f -v
 
 # install nvm
@@ -57,11 +58,9 @@ chmod u+x nvim.appimage
 ./squashfs-root/AppRun --version
 sudo mv squashfs-root /
 sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
-
 echo 'PATH=/home/alex/.local/bin:$PATH' >> ~/.bashrc
-# 
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) 
 
+# update default lunarvim config by my own config
 rm ~/.config/lvim/config.lua
 curl https://raw.githubusercontent.com/shaninalex/my-lvim-config/main/config.lua > ~/.config/lvim/config.lua
-lvim
