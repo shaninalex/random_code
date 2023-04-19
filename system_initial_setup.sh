@@ -64,3 +64,30 @@ bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/
 # update default lunarvim config by my own config
 rm ~/.config/lvim/config.lua
 curl https://raw.githubusercontent.com/shaninalex/my-lvim-config/main/config.lua > ~/.config/lvim/config.lua
+
+# required dependenciec for PCloud
+sudo add-apt-repository universe
+sudo apt install libfuse2
+# NOTE: this is not working because of website
+curl https://www.pcloud.com/how-to-install-pcloud-drive-linux.html?download=electron-64 > ~/utils/pcloud
+chmod +x ~/utils/pcloud
+
+git config --global user.name "shaninalex"
+git config --global user.email "shanin.x@gmail.com"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
