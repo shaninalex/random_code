@@ -57,4 +57,11 @@ chmod u+x nvim.appimage
 ./squashfs-root/AppRun --version
 sudo mv squashfs-root /
 sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
+
+echo 'PATH=/home/alex/.local/bin:$PATH' >> ~/.bashrc
+# 
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) 
+
+rm ~/.config/lvim/config.lua
+curl https://raw.githubusercontent.com/shaninalex/my-lvim-config/main/config.lua > ~/.config/lvim/config.lua
+lvim
