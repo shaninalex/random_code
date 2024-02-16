@@ -1,0 +1,78 @@
+# This github action first create new tag based on github commit history.
+# Then build react application, get latest added tag name, create archive
+# with named with sufix of the tag, generate release and add assets to 
+# this release.
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: '0'
+
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.66.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        MAJOR_STRING_TOKEN: "release:"
+        MINOR_STRING_TOKEN: "feat:"
+        PATCH_STRING_TOKEN: "fix:"
+
+  build:
+    runs-on: ubuntu-latest
+    needs: ["tag"]
+    defaults:
+      run:
+        working-directory: ./react-extention
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: yarn
+
+    - name: Build project
+      run: yarn build
+      env:
+        VITE_SERVER_HOST: ${{ secrets.VITE_SECRET_KEY }}
+
+    - name: Get latest tag
+      id: get_tag
+      run: |
+        echo "::set-output name=TAG::$(git describe --tags --abbrev=0)"
+
+    - name: Package /dist directory
+      run: zip -r build-${{ steps.get_tag.outputs.TAG }}.zip dist/
+
+    - name: Create Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: react-extention/build-${{ steps.get_tag.outputs.TAG }}.zip
+        tag: ${{ steps.get_tag.outputs.TAG }}
+        artifactContentType: application/zip
+
+    - name: Upload Release Asset
+      uses: softprops/action-gh-release@v1
+      with:
+        files: react-extention/build-${{ steps.get_tag.outputs.TAG }}.zip
+        tag_name: ${{ steps.get_tag.outputs.TAG }}
