@@ -1,6 +1,9 @@
 # Generate comments for Golang code.
 # it searches lines like this:
 # func (s *Service) FunctionName(
+# func FunctionName(
+# type Service struct {
+#
 # and generate comment like this:
 # // FunctionName - <some words depending on function name>
 # No AI. Just raw substitution.
@@ -11,6 +14,14 @@ import sys
 
 FUNC_PATTERN = re.compile(
     r'^\s*func\s+\(([^)]+)\)\s+(?P<name>[A-Z][A-Za-z0-9_]*)\s*\(', re.MULTILINE
+)
+
+FUNC_NO_RECEIVER_PATTERN = re.compile(
+    r'^\s*func\s+(?P<name>[A-Z][A-Za-z0-9_]*)\s*\(', re.MULTILINE
+)
+
+TYPE_PATTERN = re.compile(
+    r'^\s*type\s+(?P<name>[A-Z][A-Za-z0-9_]*)\s+', re.MULTILINE
 )
 
 # Common verbs or method prefixes with useful translations
@@ -82,12 +93,21 @@ def process_file(path: str):
     i = 0
     while i < len(lines):
         line = lines[i]
-        match = FUNC_PATTERN.match(line)
 
-        if match:
-            func_name = match.group('name')
+        match_method = FUNC_PATTERN.match(line)
+        match_func = FUNC_NO_RECEIVER_PATTERN.match(line)
+        match_type = TYPE_PATTERN.match(line)
 
-            # Check for existing comment on previous line
+        func_name = None
+        if match_method:
+            func_name = match_method.group('name')
+        elif match_func:
+            func_name = match_func.group('name')
+        elif match_type:
+            func_name = match_type.group('name')
+
+        if func_name:
+            # Check for existing comment
             if i == 0 or not lines[i - 1].strip().startswith('//'):
                 comment = generate_comment(func_name)
                 new_lines.append(comment + '\n')
@@ -97,6 +117,7 @@ def process_file(path: str):
 
     with open(path, 'w') as f:
         f.writelines(new_lines)
+
 
 
 def walk_go_files(base_dir: str):
