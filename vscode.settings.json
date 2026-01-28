@@ -1,0 +1,25 @@
+{
+  "editor.fontFamily": "'Hasklug Nerd Font Mono', monospace",
+  "editor.fontSize": 16,
+  "workbench.tree.indent": 16,
+  "workbench.productIconTheme": "material-product-icons",
+  "catppuccin.italicKeywords": false,
+  "editor.minimap.enabled": false,
+  "redhat.telemetry.enabled": false,
+  "git.confirmSync": false,
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "editor.stickyScroll.enabled": false,
+  "workbench.tree.enableStickyScroll": false,
+  "[graphql]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "npm.exclude": "",
+}
