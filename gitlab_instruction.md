@@ -123,7 +123,7 @@ Save the deploy key.
 Your pipeline uses:
 
 ```text
-git@github.com:shaninalex/machines.git
+git@github.com:shaninalex/<repository_name>.git
 ```
 
 Ensure that:
@@ -162,7 +162,7 @@ Commit to the `main` branch.
 GitLab CI will execute:
 
 ```bash
-git remote add github git@github.com:shaninalex/machines.git
+git remote add github git@github.com:shaninalex/<repository_name>.git
 git fetch --unshallow || true
 git fetch --all --tags
 git checkout -B main origin/main
@@ -202,7 +202,7 @@ This usually means:
 Verify the remote URL:
 
 ```text
-git@github.com:shaninalex/machines.git
+git@github.com:shaninalex/<repository_name>.git
 ```
 
 Also verify that the deploy key belongs to that repository.
